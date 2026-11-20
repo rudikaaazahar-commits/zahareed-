@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мої Ігри | APK Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0d001a, #1a0033);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        header {
+            text-align: center;
+            padding: 40px 20px 20px;
+        }
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ff007f, #00f0ff, #ffe600);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .add-toggle-btn {
+            background: #00f0ff;
+            color: #0d001a;
+            border: none;
+            padding: 10px 25px;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .add-toggle-btn:hover {
+            background: #ff007f;
+            color: #fff;
+        }
+        .add-form-container {
+            max-width: 500px;
+            margin: 0 auto 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+        .add-form-container input, .add-form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+        }
+        .add-form-container button {
+            background: linear-gradient(45deg, #ff007f, #ff5e00);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            width: 280px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
+        }
+        .game-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #00f0ff;
+            margin-bottom: 15px;
+        }
+        .game-desc {
+            font-size: 0.95rem;
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(45deg, #ff007f, #ff5e00);
+            color: #fff;
+            padding: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 30px;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #666;
+            background: rgba(0,0,0,0.5);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Мої Ігри</h1>
+        <p class="subtitle">Сайт моїх Android ігор. Завантажуй та грай!</p>
+    </header>
+
+    <div class="controls">
+        <button class="add-toggle-btn" onclick="toggleForm()">+ Додати нову гру</button>
+    </div>
+
+    <!-- Форма для додавання гри прямо на сторінці -->
+    <div class="add-form-container" id="gameForm">
+        <input type="text" id="titleInput" placeholder="Назва гри">
+        <textarea id="descInput" placeholder="Короткий опис гри" rows="3"></textarea>
+        <input type="text" id="fileInput" placeholder="Назва APK файлу (наприклад: game.apk)">
+        <button onclick="addGame()">Додати на сайт</button>
+    </div>
+
+    <div class="container" id="gamesContainer">
+        <!-- Гра 1 -->
+        <div class="game-card">
+            <div>
+                <div class="game-title">GTA Mobile</div>
+                <p class="game-desc">Відкритий світ, тачки та місії на Android.</p>
+            </div>
+            <a href="game.apk" class="download-btn" download>Завантажити APK</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Всі права захищені.</p>
+    </footer>
+
+<script>
+    function toggleForm() {
+        const form = document.getElementById('gameForm');
+        form.style.display = form.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function addGame() {
+        const title = document.getElementById('titleInput').value;
+        const desc = document.getElementById('descInput').value;
+        const file = document.getElementById('fileInput').value;
+
+        if (!title || !file) {
+            alert('Будь ласка, введи назву гри та назву APK файлу!');
+            return;
+        }
+
+        const container = document.getElementById('gamesContainer');
+        
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.innerHTML = `
+            <div>
+                <div class="game-title">${title}</div>
+                <p class="game-desc">${desc || 'Без опису'}</p>
+            </div>
+            <a href="${file}" class="download-btn" download>Завантажити APK</a>
+        `;
+
+        container.appendChild(card);
+
+        // Очистити поля та сховати форму
+        document.getElementById('titleInput').value = '';
+        document.getElementById('descInput').value = '';
+        document.getElementById('fileInput').value = '';
+        toggleForm();
+    }
+</script>
+
+</body>
+</html>
